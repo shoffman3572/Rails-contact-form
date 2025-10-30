@@ -1,37 +1,37 @@
-<h2>Contact Me</h2>
+<div class="contact-form">
+  <% if @contact.errors.any? %>
+    <div class="error">
+      <p><strong>Please fix:</strong></p>
+      <ul>
+        <% @contact.errors.full_messages.each do |m| %>
+          <li><%= m %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<% if @contact.errors.any? %>
-  <div style="color:crimson;">
-    <p><strong>Please fix:</strong></p>
-    <ul>
-      <% @contact.errors.full_messages.each do |m| %>
-        <li><%= m %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+  <%= form_with model: @contact, url: contacts_path, data: { turbo: false } do |f| %>
+    <p>
+      <%= f.label :name %>
+      <%= f.text_field :name, required: true %>
+    </p>
 
-<%= form_with model: @contact, url: contacts_path, data: { turbo: false } do |f| %>
-  <p>
-    <%= f.label :name %><br>
-    <%= f.text_field :name, required: true %>
-  </p>
+    <p>
+      <%= f.label :email %>
+      <%= f.email_field :email, required: true %>
+    </p>
 
-  <p>
-    <%= f.label :email %><br>
-    <%= f.email_field :email, required: true %>
-  </p>
+    <p>
+      <%= f.label :message %>
+      <%= f.text_area :message, rows: 6, required: true %>
+    </p>
 
-  <p>
-    <%= f.label :message %><br>
-    <%= f.text_area :message, rows: 6, required: true %>
-  </p>
+    <!-- Honeypot (hidden) -->
+    <p style="display:none;">
+      <%= f.label :nickname %>
+      <%= f.text_field :nickname, autocomplete: "off" %>
+    </p>
 
-  <!-- Honeypot (hidden) -->
-  <p style="display:none;">
-    <%= f.label :nickname %>
-    <%= f.text_field :nickname, autocomplete: "off" %>
-  </p>
-
-  <p><%= f.submit "Send" %></p>
-<% end %>
+    <p><%= f.submit "Send" %></p>
+  <% end %>
+</div>
