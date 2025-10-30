@@ -10,7 +10,7 @@ class ContactsController < ApplicationController
 
     @contact = Contact.new(contact_params)
     if @contact.save
-      # later you can email: ContactMailer.new_message(@contact).deliver_later
+      ContactMailer.new_message(@contact).deliver_later
       redirect_to thanks_contacts_path
     else
       render :new, status: :unprocessable_entity
