@@ -66,4 +66,24 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   config.active_job.queue_adapter = :async
+
+  config.action_mailer.default_url_options = {
+    host: ENV.fetch("APP_HOST", "example.onrender.com"),
+    protocol: "https"
+  }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              ENV["SMTP_ADDRESS"],     # e.g. "smtp.sendgrid.net"
+    port:                 (ENV["SMTP_PORT"] || 587).to_i,
+    user_name:            ENV["SMTP_USERNAME"],    # e.g. "apikey" for SendGrid
+    password:             ENV["SMTP_PASSWORD"],
+    authentication:       :login,
+    enable_starttls_auto: true,
+    openssl_verify_mode:  "none"                   # optional: helps on some hosts
+  }
+
+  # Optional helpful logs
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_caching = false
 end
