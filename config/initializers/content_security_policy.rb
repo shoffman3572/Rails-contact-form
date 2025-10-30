@@ -27,3 +27,7 @@
 #   # Report violations without enforcing the policy.
 #   # config.content_security_policy_report_only = true
 # end
+Rails.application.config.content_security_policy do |policy|
+  # Replace with the actual domain of your portfolio site
+  policy.frame_ancestors :self, "https://shoffman3572.github.io/"
+end
